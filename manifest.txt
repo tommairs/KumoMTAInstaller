@@ -1,0 +1,42 @@
+# MANIFEST.TXT
+# Populate this to enable automated install
+
+export FNAME="KumoMTA DevTest"
+export MYFQDN=""
+export DOMAIN=""
+export SELECTOR=""
+export SHORTNAME=""
+export RH_USER_NAME="" 
+export RH_PASSWORD=""
+export OWNERNAME=""
+export EMAIL=""
+export TZ=MST
+export MYTZ=""
+export CERT_CO=""
+export CERT_ST=""
+export CERT_LO=""
+export CERT_ORG=""
+export POLICYTYPE="init"
+export INSTALLTYPE="apt"
+export SSLDIR="Ubuntu"
+
+# Below is a potential sample and options:
+# export FNAME="KumoMTA Dev7 (Rocky 9)"
+# export MYFQDN="kdev7.yourdomain.com"
+# export DOMAIN="kdev7.yourdomain.com"
+# export SELECTOR="dkim1024"
+# export SHORTNAME="kdev7"
+# export RH_USER_NAME=""
+# export RH_PASSWORD=""
+# export OWNERNAME="Joe Coder"
+# export EMAIL="jc@yourdomain.com"
+# export TZ=MST
+# export MYTZ="America/Edmonton"
+# export CERT_CO="US"
+# export CERT_ST="Colorado"
+# export CERT_LO="Denver"
+# export CERT_ORG="yourdomain.com"
+# export POLICYTYPE="init"  # Could also be "sink"
+# export INSTALLTYPE="dnf"  # Could also be "apt" for Debian/Ubuntu systems
+# export SSLDIR="Rocky"     # Could also be "Ubuntu" for Debian/Ubuntu systems
+
