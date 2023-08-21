@@ -304,10 +304,10 @@ end
 
 kumo.on('smtp_server_message_received', function(msg)
   -- Assign tenant based on X-Tenant header.
-  local tenant = msg:get_first_named_header_value 'X-Tenant'
-  if tenant then
-    msg:set_meta('tenant', tenant)
-  end
+  local tenant = msg:get_first_named_header_value('x-virtual-mta') or 'default'
+  msg:set_meta('tenant',tenant)
+  
+end
 
 --[[
     

@@ -67,8 +67,7 @@ end
 
 kumo.on('get_egress_path_config', function(domain, egress_source, site_name)
   return kumo.make_egress_path {
-    connection_limit = 32,
-    smtp_port = 587,
+    connection_limit = 10,
     enable_tls = "OpportunisticInsecure",
   }
 
@@ -91,6 +90,7 @@ end)
 
 kumo.on('smtp_server_message_received', function(msg)
   -- Assign tenant based on X-Tenant header.
-  msg:set_meta('queue', '[20.83.209.56]')
+  local tenant = msg:get_first_named_header_value('x-virtual-mta') or 'default'
+  msg:set_meta('tenant',tenant)
 end)
 

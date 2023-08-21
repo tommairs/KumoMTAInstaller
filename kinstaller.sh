@@ -57,6 +57,7 @@ ChallengeResponseAuthentication no
 UsePAM no
 " |sudo tee -a /etc/ssh/sshd_config
 
+#Modify and save the MOTD banner
 sudo cp motd.txt /etc/motd -rf
 sudo sed -i "s/    Kumo Sink/$FNAME/" /etc/motd
 sudo sed -i "s/Rocky 9/$SSLDIR/" /etc/motd
@@ -65,7 +66,7 @@ sudo sed -i "s/Rocky 9/$SSLDIR/" /etc/motd
 # Check to see if this is actual RHEL
 export ISRH=`cat /etc/redhat-release`
 if [[ "$ISRH" == *"Red Hat Enterprise"* ]];
-then
+6then
     echo "This looks like Red Hat Enterprise Linux."
     
     if [ "$RH_USER_NAME" == "" ]; then
@@ -95,19 +96,20 @@ fs.file-max = 250000
 net.ipv4.ip_local_port_range = 5000 63000
 net.ipv4.tcp_tw_reuse = 1
 kernel.shmmax = 68719476736
-net.core.somaxconn = 1024
+net.core.somaxconn = 4096
 vm.nr_hugepages = 10
 kernel.shmmni = 4096 " | sudo tee -a /etc/sysctl.d/kumo-sysctl.conf
 
 sudo /sbin/sysctl -p /etc/sysctl.d/kumo-sysctl.conf
 
-
+# Kill of services that may be preinstalled and will interfere
 sudo systemctl stop  postfix.service
 sudo systemctl disable postfix.service
 
 sudo systemctl stop  qpidd.service
 sudo systemctl disable qpidd.service
 
+# Determine which installer to run
 PKGTYPE=`cat /etc/os-release |grep ^NAME`
 
 if [ "$PKGTYPE" == "Rocky Linux" ]; then
@@ -127,6 +129,7 @@ else
         echo "Unknown OS.  Run APT or RPM installer manually"
 fi
 
+# Build a DKIM key for your sending domain
 sudo mkdir -p /opt/kumomta/etc/dkim/$DOMAIN
 sudo openssl genrsa -out /opt/kumomta/etc/dkim/$DOMAIN/$SELECTOR.key 1024
 sudo openssl rsa -in /opt/kumomta/etc/dkim/$DOMAIN/$SELECTOR.key -out /opt/kumomta/etc/dkim/$DOMAIN/$SELECTOR.pub -pubout -outform PEM
