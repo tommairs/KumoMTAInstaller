@@ -1,0 +1,16 @@
+# To use this sample, first change <your email address> to your email address
+# Then copy and paste the modified text to your console command line.
+# or run `sh curltest.json`
+
+
+curl -H 'Content-Type: application/json' 'http://127.0.0.1:8000/api/inject/v1' -d '{
+    "envelope_sender": "<your email address>",
+    "content": "Subject: hello\n\nHello there",
+    "recipients": [
+        {
+            "email": "<your email address>"
+        }
+    ]
+}'
+
+
