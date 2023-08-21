@@ -314,10 +314,10 @@ end
     -- SIGNING MUST COME LAST OR YOU COULD BREAK YOUR DKIM SIGNATURES
   dkim_sign(msg)
 end)
-
-kumo.on('http_message_generated', function(msg)
-  -- SIGNING MUST COME LAST OR YOU COULD BREAK YOUR DKIM SIGNATURES
-  dkim_sign(msg)
-end)
 ]]--
-    
+   
+kumo.on('http_message_generated', function(msg)
+  -- Accept and discard all messages
+     msg:set_meta('queue', 'null')
+end)
+ 

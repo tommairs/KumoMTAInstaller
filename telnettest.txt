@@ -1,0 +1,16 @@
+# To use this, first replace <your email address> with your email address
+# Then start telnet with `telnet localhost 25`
+# Then paste the modified text below into the telnet prompt
+
+ehlo moto
+mail from:<your email address>
+rcpt to:<your email address>
+data
+from:<your email address>
+to:<your email address>
+subject: This is a test
+
+And this is the body
+.
+quit
+
