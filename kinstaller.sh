@@ -65,8 +65,7 @@ sudo sed -i "s/Rocky 9/$SSLDIR/" /etc/motd
 ##########################################################
 # Check to see if this is actual RHEL
 export ISRH=`cat /etc/redhat-release`
-if [[ "$ISRH" == *"Red Hat Enterprise"* ]];
-6then
+if [[ "$ISRH" == *"Red Hat Enterprise"* ]]; then
     echo "This looks like Red Hat Enterprise Linux."
     
     if [ "$RH_USER_NAME" == "" ]; then
