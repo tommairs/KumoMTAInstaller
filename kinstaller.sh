@@ -136,10 +136,13 @@ sudo openssl rsa -in /opt/kumomta/etc/dkim/$DOMAIN/$SELECTOR.key -out /opt/kumom
 sudo echo "
 syntax on" |sudo tee -a ~/.vimrc 
 
+sudo systemctl enable kumomta
+sudo systemctl start kumomta
+
 echo
 echo "Installation of KumoMTA complete"
 echo
 
 # Optionally test it...
-#telnet localhost 25
+telnet localhost 25
 
