@@ -12,6 +12,7 @@
 # Increase the storage volume to 20Gb to accomodate logging.
 # Now login and do the basic OS cleanup and add some helpful packages
 
+sudo apt-get autoclean
 sudo apt-get -y update
 sudo apt-get -y upgrade
 sudo apt install -y firewalld tree telnet git bind9 bind9-utils vim jq
