@@ -59,6 +59,10 @@ UsePAM no
 
 #Modify and save the MOTD banner
 sudo cp motd.txt /etc/motd -rf
+sudo cp motd.sh /etc/motd.sh -rf
+echo "sh /etc/motd.sh" >> ~/.profile
+echo "sh /etc/motd.sh" >> ~/.bashrc
+
 sudo sed -i "s/    Kumo Sink/$FNAME/" /etc/motd
 sudo sed -i "s/Rocky 9/$SSLDIR/" /etc/motd
 
@@ -101,7 +105,7 @@ kernel.shmmni = 4096 " | sudo tee -a /etc/sysctl.d/kumo-sysctl.conf
 
 sudo /sbin/sysctl -p /etc/sysctl.d/kumo-sysctl.conf
 
-# Kill of services that may be preinstalled and will interfere
+# Kill off services that may be preinstalled and will interfere
 sudo systemctl stop  postfix.service
 sudo systemctl disable postfix.service
 

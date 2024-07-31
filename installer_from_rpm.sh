@@ -44,12 +44,30 @@ sudo firewall-cmd --reload
 
 
 # This is the part that actually installs KumoMTA
+OSNAME=`cat /etc/os-release |grep -Po '(?<=PRETTY_NAME\=")[^["]*\s'`
+echo "This is actually " $OSNAME
+
+
+if [ "$OSNAME" == "Rocky Linux" ]; then
+# IF this is Rocky, then....
 sudo dnf -y install dnf-plugins-core
 sudo dnf config-manager \
     --add-repo \
     https://openrepo.kumomta.com/files/kumomta-rocky.repo
 sudo yum install -y kumomta-dev
 sudo cp init.lua /opt/kumomta/etc/policy/
+fi
+
+if [ "$OSNAME" == "Amazon Linux" ]; then
+# IF this is AMZN 2023, then....
+sudo dnf -y install dnf-plugins-core
+sudo dnf config-manager --add-repo  https://openrepo.kumomta.com/files/kumomta-amazon2023.repo
+sudo yum install -y kumomta-dev
+sudo cp init.lua /opt/kumomta/etc/policy/
+fi
+
+
+
 
 # This will run KumoMTA as sudo (to access port 25) and push it to the background
 #sudo KUMOD_LOG=kumod=info /opt/kumomta/sbin/kumod --policy /opt/kumomta/etc/policy/${POLICYTYPE}.lua --user kumod&

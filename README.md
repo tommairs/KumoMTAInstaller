@@ -24,7 +24,7 @@ The SEND policy is a typical basic sending profile complete with TLS, DKIM, cust
  - Before going further, create a resolvable domain in DNS
  - Clone this repo to that server
 
-With DNF (CentOS, Rocky, Alma, etc):
+With DNF (AMZN2023, CentOS, Rocky, Alma, etc):
 ```console
 sudo dnf install -y git
 ```
