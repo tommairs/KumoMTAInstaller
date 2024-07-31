@@ -143,6 +143,9 @@ syntax on" |sudo tee -a ~/.vimrc
 sudo systemctl enable kumomta
 sudo systemctl start kumomta
 
+sudo systemctl enable kumo-tsa-daemon
+sudo systemctl start kumo-tsa-daemon
+
 echo
 echo "Installation of KumoMTA complete"
 echo
