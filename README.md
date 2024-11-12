@@ -60,7 +60,7 @@ bash kinstaller.sh
  Note that the systemd and environment files are not added automatically. They are there for your convenience to add manually if needed.
  
 ## Validations
-This script has been tested succesfully with: 
+This script has been tested successfully with: 
 * Ubuntu 20, 22, 24
 * Rocky 9
  
