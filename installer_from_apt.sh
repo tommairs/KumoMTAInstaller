@@ -45,15 +45,34 @@ sudo firewall-cmd --reload
 
 # This is the part that actually installs KumoMTA
 
-#If this is V22...
+#If this is V24...
 
-UVER=`cat /etc/os-release |grep VERSION_ID |grep -oh 22` 
+UVER=`cat /etc/os-release |grep VERSION_ID`
+
+VERSION_ID="24.04"
+if [ "$UVER" == "VERSION_ID=\"24.04\"" ]; then
+  UVER="24"
+fi
+
+# if not v24, maybe 22 or 20? 
 if [ -z "$UVER" ]; then
-  UVER="20"
+UVER=`cat /etc/os-release |grep VERSION_ID |grep '22'`
 fi
 
 echo $UVER
 
+#If this is V24...
+if [ "$UVER" == "24" ]; then
+sudo apt install -y curl gnupg ca-certificates
+curl -fsSL https://openrepo.kumomta.com/kumomta-ubuntu-22/public.gpg | sudo gpg --yes --dearmor -o /usr/share/keyrings/kumomta.gpg
+curl -fsSL https://openrepo.kumomta.com/files/kumomta-ubuntu22.list | sudo tee /etc/apt/sources.list.d/kumomta.list > /dev/null
+sudo apt update
+sudo apt install -y kumomta
+fi
+
+
+
+#If this is V22...
 if [ "$UVER"  == "22" ]; then
 sudo apt install -y curl gnupg ca-certificates
 curl -fsSL https://openrepo.kumomta.com/kumomta-ubuntu-22/public.gpg | sudo gpg --yes --dearmor -o /usr/share/keyrings/kumomta.gpg

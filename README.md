@@ -51,7 +51,7 @@ Then execute the installer with bash (not sh).
 bash kinstaller.sh
 ```
  - follow all the prompts
-  - When finished, you can test the Transmissions API with a ```sh curltest.json```
+  - When finished, you can test the Transmissions API with a `sh curltest.json` which will send a generic mail to th eaddress defined as "Owner" in the manifest file.
   - or run telnet localhost 25 and paste the contents of telnettest.txt
 
  Any specific instructions are buried in the script and are typically exposed as part of the Bash script.
@@ -59,4 +59,9 @@ bash kinstaller.sh
  
  Note that the systemd and environment files are not added automatically. They are there for your convenience to add manually if needed.
  
+## Validations
+This script has been tested succesfully with: 
+* Ubuntu 20, 22, 24
+* Rocky 9
  
+
