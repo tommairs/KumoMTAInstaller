@@ -1,24 +1,24 @@
 # MANIFEST.TXT
 # Populate this to enable automated install
 
-export FNAME=""
-export MYFQDN=""
-export DOMAIN=""
-export SELECTOR=""
-export SHORTNAME=""
+export FNAME="KumoMTA Webmail on Ubuntu 24"
+export MYFQDN="webmail.kumomta.com"
+export DOMAIN="webmail.kumomta.com"
+export SELECTOR="s1024"
+export SHORTNAME="webmail"
 export RH_USER_NAME="" 
 export RH_PASSWORD=""
-export OWNERNAME=""
-export EMAIL=""
+export OWNERNAME="Tom Mairs"
+export EMAIL="tom@kumomta.com"
 export TZ=MST
-export MYTZ=""
-export CERT_CO=""
-export CERT_ST=""
-export CERT_LO=""
-export CERT_ORG=""
+export MYTZ="MST"
+export CERT_CO="CA"
+export CERT_ST="AB"
+export CERT_LO="Calgary"
+export CERT_ORG="KumoMTA"
 export POLICYTYPE="init"
-export INSTALLTYPE="dnf"
-export SSLDIR="Rocky"
+export INSTALLTYPE="apt"
+export SSLDIR="Ubuntu"
 
 # Below is a potential sample and options:
 # export FNAME="KumoMTA Dev7 (Rocky 9)"

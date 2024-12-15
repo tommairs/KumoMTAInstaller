@@ -45,21 +45,7 @@ sudo firewall-cmd --reload
 
 # This is the part that actually installs KumoMTA
 
-#If this is V24...
-
-UVER=`cat /etc/os-release |grep VERSION_ID`
-
-VERSION_ID="24.04"
-if [ "$UVER" == "VERSION_ID=\"24.04\"" ]; then
-  UVER="24"
-fi
-
-# if not v24, maybe 22 or 20? 
-if [ -z "$UVER" ]; then
-UVER=`cat /etc/os-release |grep VERSION_ID |grep '22'`
-fi
-
-echo $UVER
+UVER=`cat /etc/os-release |grep VERSION_ID | awk  '{print $1}' | awk -F '"' '{print $2}' | awk -F '.' '{print $1}'`
 
 #If this is V24...
 if [ "$UVER" == "24" ]; then
@@ -69,7 +55,6 @@ curl -fsSL https://openrepo.kumomta.com/files/kumomta-ubuntu22.list | sudo tee /
 sudo apt update
 sudo apt install -y kumomta
 fi
-
 
 
 #If this is V22...
