@@ -73,7 +73,7 @@ sudo apt install -y curl gnupg ca-certificates
 curl -fsSL https://openrepo.kumomta.com/kumomta-ubuntu-20/public.gpg | sudo gpg --yes --dearmor -o /usr/share/keyrings/kumomta.gpg
 curl -fsSL https://openrepo.kumomta.com/files/kumomta-ubuntu20.list | sudo tee /etc/apt/sources.list.d/kumomta.list > /dev/null
 sudo apt update
-sudo apt install -y kumomta
+sudo apt install -y kumomta-dev
 fi
 
 
