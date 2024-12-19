@@ -64,6 +64,9 @@ sudo cp motd.sh /etc/motd.sh -rf
 echo "sh /etc/motd.sh" >> ~/.profile
 #echo "sh /etc/motd.sh" >> ~/.bashrc
 
+cat "                $FNAME
+------------------------------------------------" >> /etc/motd
+
 sudo sed -i "s/    Kumo Sink/$FNAME/" /etc/motd
 sudo sed -i "s/Rocky 9/$SSLDIR/" /etc/motd
 
