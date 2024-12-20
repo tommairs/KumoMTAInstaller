@@ -70,7 +70,6 @@ fi
 
 
 
-
 # This will run KumoMTA as sudo (to access port 25) and push it to the background
 #sudo KUMOD_LOG=kumod=info /opt/kumomta/sbin/kumod --policy /opt/kumomta/etc/policy/${POLICYTYPE}.lua --user kumod&
 
