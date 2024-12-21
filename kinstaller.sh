@@ -27,7 +27,7 @@ fi
 
   if [ -z "$SELECTOR" ]; then
     echo "Enter the DKIM Selector id for DNS (IE: \"dkim1024\") or press ENTER/RETURN for default" 
-    read MYFQDN
+    read SELECTOR
   fi
   
   if [ -z "$POLICYTYPE" ]; then
@@ -90,23 +90,23 @@ fi
 ##########################################################
 
 
+# Commenting this from the installer as it should be tuned per server. 
+## Modify sysctl with friendly values
+#sudo echo "
+#vm.max_map_count = 768000
+#net.core.rmem_default = 32768
+#net.core.wmem_default = 32768
+#net.core.rmem_max = 262144
+#net.core.wmem_max = 262144
+#fs.file-max = 250000
+#net.ipv4.ip_local_port_range = 5000 63000
+#net.ipv4.tcp_tw_reuse = 1
+#kernel.shmmax = 68719476736
+#net.core.somaxconn = 4096
+#vm.nr_hugepages = 10
+#kernel.shmmni = 4096 " | sudo tee -a /etc/sysctl.d/kumo-sysctl.conf
 
-# Modify sysctl with friendly values
-sudo echo "
-vm.max_map_count = 768000
-net.core.rmem_default = 32768
-net.core.wmem_default = 32768
-net.core.rmem_max = 262144
-net.core.wmem_max = 262144
-fs.file-max = 250000
-net.ipv4.ip_local_port_range = 5000 63000
-net.ipv4.tcp_tw_reuse = 1
-kernel.shmmax = 68719476736
-net.core.somaxconn = 4096
-vm.nr_hugepages = 10
-kernel.shmmni = 4096 " | sudo tee -a /etc/sysctl.d/kumo-sysctl.conf
-
-sudo /sbin/sysctl -p /etc/sysctl.d/kumo-sysctl.conf
+#sudo /sbin/sysctl -p /etc/sysctl.d/kumo-sysctl.conf
 
 # Kill off services that may be preinstalled and will interfere
 sudo systemctl stop  postfix.service
