@@ -62,10 +62,12 @@ fi
 if [ "$OSNAME"=="Amazon Linux" ]; then
 # IF this is AMZN 2023, then....
 echo "Installing KumoMTA for " $OSNAME
+
 sudo dnf -y install dnf-plugins-core
-sudo dnf config-manager --add-repo  https://openrepo.kumomta.com/files/kumomta-amazon2023.repo
-sudo yum install -y kumomta-dev
+sudo dnf config-manager --add-repo https://openrepo.kumomta.com/files/kumomta-amazon2023.repo
+sudo dnf -y install kumomta-dev 
 sudo cp init.lua /opt/kumomta/etc/policy/
+echo "sh /etc/motd.sh" >> /etc/profile.d/sh.local
 fi
 
 
