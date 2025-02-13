@@ -67,7 +67,7 @@ sudo dnf -y install dnf-plugins-core
 sudo dnf config-manager --add-repo https://openrepo.kumomta.com/files/kumomta-amazon2023.repo
 sudo dnf -y install kumomta-dev 
 sudo cp init.lua /opt/kumomta/etc/policy/
-echo "sh /etc/motd.sh" >> /etc/profile.d/sh.local
+sudo echo "sh /etc/motd.sh" | sudo tee -a /etc/profile.d/sh.local
 fi
 
 
