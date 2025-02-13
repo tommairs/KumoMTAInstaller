@@ -23,6 +23,7 @@ fi
     if [ -z "$DOMAIN" ]; then
     echo "Enter the Sending Domain for DKIM signing  (IE: \"e.myserver.net\") or press ENTER/RETURN for default" 
     read MYFQDN
+    export DOMAIN=$MYFQDN
   fi
 
   if [ -z "$SELECTOR" ]; then
