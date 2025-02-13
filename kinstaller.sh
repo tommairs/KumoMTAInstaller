@@ -66,9 +66,6 @@ sudo cp motd.sh /etc/motd.sh -rf
 echo "sh /etc/motd.sh" >> ~/.profile
 #echo "sh /etc/motd.sh" >> ~/.bashrc
 
-sudo sed -i "s/    Kumo Sink/$FNAME/" /etc/motd
-sudo sed -i "s/Rocky 9/$SSLDIR/" /etc/motd
-
 ##########################################################
 # Check to see if this is actual RHEL
 export ISRH=`cat /etc/redhat-release`
