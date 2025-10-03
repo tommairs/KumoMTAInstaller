@@ -57,6 +57,13 @@ fi
     read SSLDIR
   fi 
 
+
+# create v3.ext file
+cat "authorityKeyIdentifier=keyid,issuer
+basicConstraints=CA:FALSE
+keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
+" > v3.ext
+
 # Generate private key 
 openssl genrsa -out ca.key 2048 
 
@@ -65,7 +72,8 @@ openssl genrsa -out ca.key 2048
 openssl req -new -key ca.key -out ca.csr -subj "/C=$CERT_CO/ST=$CERT_ST/L=$CERT_LO/O=$CERT_ORG/CN=$MYFQDN/"
 
 # Generate Self Signed Key
-openssl x509 -req -days 365 -in ca.csr -signkey ca.key -out ca.crt
+# (old) openssl x509 -req -days 365 -in ca.csr -signkey ca.key -out ca.crt
+openssl x509 -req -days 365 -in ca.csr -extfile v3.ext -CA ca.crt -CAkey ca.key -CAcreateserial -out ca.crt
 
 # Copy the files to the correct locations
 
