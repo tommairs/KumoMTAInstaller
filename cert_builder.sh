@@ -58,52 +58,38 @@ fi
   fi 
 
 
-# create v3.ext file
-cat "authorityKeyIdentifier=keyid,issuer
-basicConstraints=CA:FALSE
-keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
-" > v3.ext
-
-# Generate private key 
-openssl genrsa -out ca.key 2048 
-
-# Generate CSR 
-#openssl req -new -key ca.key -out ca.csr           
-openssl req -new -key ca.key -out ca.csr -subj "/C=$CERT_CO/ST=$CERT_ST/L=$CERT_LO/O=$CERT_ORG/CN=$MYFQDN/"
-
-# Generate Self Signed Key
-# (old) openssl x509 -req -days 365 -in ca.csr -signkey ca.key -out ca.crt
-openssl x509 -req -days 365 -in ca.csr -extfile v3.ext -CA ca.crt -CAkey ca.key -CAcreateserial -out ca.crt
+# Getting cert with LetsEncrypt
+sudo apt-get remove certbot
+sudo snap install --classic certbot
+sudo ln -s /snap/bin/certbot /usr/bin/certbot
+sudo certbot certonly --standalone -n --agree-tos -m $EMAIL -d $MYFQDN
 
 # Copy the files to the correct locations
-
 # Note this is /etc/ssl/ for Ubuntu/Debian
 # Note this is /etc/pki/tls/ for CentOS/Rocky
 # Note this is /opt/kumomta/etc/tls/ for KumoMTA Specific
 
-
-
 if [ $SSLDIR == "Ubuntu" ] || [ $SSLDIR == "Debian" ]; then
   sudo mkdir -p /etc/ssl/$DOMAIN
-  sudo cp -f ca.crt /etc/ssl/$DOMAIN
-  sudo cp -f ca.key /etc/ssl/$DOMAIN
-  sudo cp -f ca.csr /etc/ssl/$DOMAIN
+  sudo cp -f /etc/letsencrypt/live/fall.kumomta.com/fullchain.pem /etc/ssl/$DOMAIN/ca.crt
+  sudo cp -f /etc/letsencrypt/live/fall.kumomta.com/privkey.pem /etc/ssl/$DOMAIN/ca.key
+  sudo cp -f /etc/letsencrypt/live/fall.kumomta.com/fullchain.pem /etc/ssl/$DOMAIN/ca.csr
   fi
 
 if [ $SSLDIR == "Apache" ] || [ $SSLDIR == "Centos" ] || [ $SSLDIR == "Rocky" ]; then
   sudo mkdir -p /etc/pki/tls/private/$DOMAIN
   sudo mkdir -p /etc/pki/tls/certs/$DOMAIN
-  sudo cp -f ca.crt /etc/pki/tls/certs/$DOMAIN
-  sudo cp -f ca.key /etc/pki/tls/private/$DOMAIN
-  sudo cp -f ca.csr /etc/pki/tls/private/$DOMAIN
+  sudo cp -f /etc/letsencrypt/live/fall.kumomta.com/fullchain.pem /etc/pki/tls/certs/$DOMAIN/ca.crt
+  sudo cp -f /etc/letsencrypt/live/fall.kumomta.com/privkey.pem /etc/pki/tls/private/$DOMAIN/ca.key
+  sudo cp -f /etc/letsencrypt/live/fall.kumomta.com/fullchain.pem /etc/pki/tls/private/$DOMAIN/ca.csr
   sed -i 's/SSLCertificateFile \/etc\/pki\/tls\/certs\/localhost.crt/SSLCertificateFile \/etc\/pki\/tls\/certs\/ca.crt/' /etc/httpd/conf.d/ssl.conf
   sed -i 's/SSLCertificateKeyFile \/etc\/pki\/tls\/private\/localhost.key/SSLCertificateKeyFile \/etc\/pki\/tls\/private\/ca.key/' /etc/httpd/conf.d/ssl.conf
 fi
 
   sudo mkdir -p /opt/kumomta/etc/tls/$DOMAIN
-  sudo mv -f ca.crt /opt/kumomta/etc/tls/$DOMAIN
-  sudo mv -f ca.key /opt/kumomta/etc/tls/$DOMAIN
-  sudo mv -f ca.csr /opt/kumomta/etc/tls/$DOMAIN
+  sudo cp -f /etc/letsencrypt/live/fall.kumomta.com/fullchain.pem /opt/kumomta/etc/tls/$DOMAIN/ca.crt
+  sudo cp -f /etc/letsencrypt/live/fall.kumomta.com/privkey.pem /opt/kumomta/etc/tls/$DOMAIN/ca.key
+  sudo cp -f /etc/letsencrypt/live/fall.kumomta.com/fullchain.pem /opt/kumomta/etc/tls/$DOMAIN/ca.csr
 
   sudo chmod 644 /opt/kumomta/etc/tls/$DOMAIN/ca.*
   sudo chown root:root /opt/kumomta/etc/tls/$DOMAIN/ca.*
