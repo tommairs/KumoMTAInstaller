@@ -15,7 +15,7 @@
 sudo dnf clean all
 sudo dnf update -y
 sudo dnf install -y firewalld tree telnet git bind bind-utils 
-sudo dnf install -y mlocate cronie gcc make gcc-c++ clang vim-enhanced
+sudo dnf install -y plocate cronie gcc make gcc-c++ clang vim-enhanced
 
 sudo systemctl start named
 sudo systemctl enable named
