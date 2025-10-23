@@ -68,18 +68,16 @@ sed -i "s/    'redis'//" get-deps.sh
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 source ~/.cargo/env
 cargo build --release
-
-# This is no longer necessary 
-#sudo assets/install.sh /opt/kumomta
+sudo assets/install.sh /opt/kumomta
 
 # Now build out some infra that is not in the RPM
 
-getent group kumod >/dev/null || groupadd --system kumod
-getent passwd kumod >/dev/null || \
-    useradd --system -g kumod -d /var/spool/kumod -s /sbin/nologin \
+sudo getent group kumod >/dev/null || sudo groupadd --system kumod
+sudo getent passwd kumod >/dev/null || \
+    sudo useradd --system -g kumod -d /var/spool/kumod -s /sbin/nologin \
     -c "Service account for kumomta" kumod
 for dir in /var/spool/kumomta /var/log/kumomta ; do
-  [ -d "\$dir" ] || install -d --mode 2770 --owner kumod --group kumod \$dir
+  [ -d "\$dir" ] ||sudo  install -d --mode 2770 --owner kumod --group kumod \$dir
 done
 
 
@@ -88,8 +86,8 @@ done
 #sudo mkdir -p /var/spool/kumo/data
 #sudo mkdir -p /var/spool/kumo/meta
 sudo mkdir -p /opt/kumomta/etc/policy
-chown kumod:kumod /opt/kumomta/etc/policy
-cp sink.lua /opt/kumomta/etc/policy/
+sudo chown kumod:kumod /opt/kumomta/etc/policy
+sudo cp sink.lua /opt/kumomta/etc/policy/
 
 
 
@@ -99,5 +97,5 @@ cp sink.lua /opt/kumomta/etc/policy/
 #sudo chmod 775 /var/spool/kumo/ -R
 
 # This will run KumoMTA as sudo (to access port 25) and push it to the background
-sudo /opt/kumomta/sbin/kumod --policy /opt/kumomta/etc/policy/tomtest.lua --user kumod&
+sudo /opt/kumomta/sbin/kumod --policy /opt/kumomta/etc/policy/sink.lua --user kumod&
 
