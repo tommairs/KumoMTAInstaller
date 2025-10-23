@@ -15,7 +15,8 @@
 sudo dnf clean all
 sudo dnf update -y
 sudo dnf upgrade -y
-sudo dnf install -y firewalld tree telnet git bind plocate cronie gcc make gcc-c++ clang
+sudo dnf install -y firewalld tree telnet git bind bind-utils 
+sudo dnf install -y plocate cronie gcc make gcc-c++ clang vim-enhanced
 
 # Make sure it all stays up to date. Run a dnf update at 3AM daily
 # This version also uses the AL2 specific cron.daily location
@@ -43,7 +44,6 @@ source ~/.profile
 source ~/.cargo/env
 rustc -V
 
-
 # Redis is not included in Rocky 10, so we need to build it from source
 sudo yum -y install gcc make
 cd /usr/local/src
@@ -63,7 +63,6 @@ cd kumomta
 
 #Also remove redis install from get-deps.sh
 sed -i "s/    'redis'//" get-deps.sh
-
 
 ./get-deps.sh
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
