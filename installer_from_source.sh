@@ -14,7 +14,8 @@
 
 sudo dnf clean all
 sudo dnf update -y
-sudo dnf install -y firewalld tree telnet git bind mlocate cronie gcc make gcc-c++ clang
+sudo dnf upgrade -y
+sudo dnf install -y firewalld tree telnet git bind plocate cronie gcc make gcc-c++ clang
 
 # Make sure it all stays up to date. Run a dnf update at 3AM daily
 # This version also uses the AL2 specific cron.daily location
@@ -42,17 +43,37 @@ source ~/.profile
 source ~/.cargo/env
 rustc -V
 
+
+# Redis is not included in Rocky 10, so we need to build it from source
+sudo yum -y install gcc make
+cd /usr/local/src
+sudo wget http://download.redis.io/redis-stable.tar.gz
+sudo tar xvzf redis-stable.tar.gz
+sudo rm -f redis-stable.tar.gz
+cd redis-stable
+sudo make
+sudo make install
+
 # Build from source since there is not AL2 rpm
+cd 
 git clone https://github.com/kumomta/kumomta.git
 
 # Pause here to provide credentials
 cd kumomta
+
+#Also remove redis install from get-deps.sh
+sed -i "s/    'redis'//" get-deps.sh
+
+
 ./get-deps.sh
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+source ~/.cargo/env
 cargo build --release
-sudo assets/install.sh /opt/kumomta
+
+# This is no longer necessary 
+#sudo assets/install.sh /opt/kumomta
 
 # Now build out some infra that is not in the RPM
-
 
 getent group kumod >/dev/null || groupadd --system kumod
 getent passwd kumod >/dev/null || \
