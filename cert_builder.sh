@@ -57,6 +57,7 @@ fi
     read SSLDIR
   fi 
 
+sudo systemctl stop apache2
 
 # Getting cert with LetsEncrypt
 sudo apt-get remove certbot
@@ -71,28 +72,30 @@ sudo certbot certonly --standalone -n --agree-tos -m $EMAIL -d $MYFQDN
 
 if [ $SSLDIR == "Ubuntu" ] || [ $SSLDIR == "Debian" ]; then
   sudo mkdir -p /etc/ssl/$DOMAIN
-  sudo cp -f /etc/letsencrypt/live/fall.kumomta.com/fullchain.pem /etc/ssl/$DOMAIN/ca.crt
-  sudo cp -f /etc/letsencrypt/live/fall.kumomta.com/privkey.pem /etc/ssl/$DOMAIN/ca.key
-  sudo cp -f /etc/letsencrypt/live/fall.kumomta.com/fullchain.pem /etc/ssl/$DOMAIN/ca.csr
+  sudo cp -f /etc/letsencrypt/live/$DOMAIN/fullchain.pem /etc/ssl/$DOMAIN/ca.crt
+  sudo cp -f /etc/letsencrypt/live/$DOMAIN/privkey.pem /etc/ssl/$DOMAIN/ca.key
+  sudo cp -f /etc/letsencrypt/live/$DOMAIN/fullchain.pem /etc/ssl/$DOMAIN/ca.csr
   fi
 
 if [ $SSLDIR == "Apache" ] || [ $SSLDIR == "Centos" ] || [ $SSLDIR == "Rocky" ]; then
   sudo mkdir -p /etc/pki/tls/private/$DOMAIN
   sudo mkdir -p /etc/pki/tls/certs/$DOMAIN
-  sudo cp -f /etc/letsencrypt/live/fall.kumomta.com/fullchain.pem /etc/pki/tls/certs/$DOMAIN/ca.crt
-  sudo cp -f /etc/letsencrypt/live/fall.kumomta.com/privkey.pem /etc/pki/tls/private/$DOMAIN/ca.key
-  sudo cp -f /etc/letsencrypt/live/fall.kumomta.com/fullchain.pem /etc/pki/tls/private/$DOMAIN/ca.csr
+  sudo cp -f /etc/letsencrypt/live/$DOMAIN/fullchain.pem /etc/pki/tls/certs/$DOMAIN/ca.crt
+  sudo cp -f /etc/letsencrypt/live/$DOMAIN/privkey.pem /etc/pki/tls/private/$DOMAIN/ca.key
+  sudo cp -f /etc/letsencrypt/live/$DOMAIN/fullchain.pem /etc/pki/tls/private/$DOMAIN/ca.csr
   sed -i 's/SSLCertificateFile \/etc\/pki\/tls\/certs\/localhost.crt/SSLCertificateFile \/etc\/pki\/tls\/certs\/ca.crt/' /etc/httpd/conf.d/ssl.conf
   sed -i 's/SSLCertificateKeyFile \/etc\/pki\/tls\/private\/localhost.key/SSLCertificateKeyFile \/etc\/pki\/tls\/private\/ca.key/' /etc/httpd/conf.d/ssl.conf
 fi
 
   sudo mkdir -p /opt/kumomta/etc/tls/$DOMAIN
-  sudo cp -f /etc/letsencrypt/live/fall.kumomta.com/fullchain.pem /opt/kumomta/etc/tls/$DOMAIN/ca.crt
-  sudo cp -f /etc/letsencrypt/live/fall.kumomta.com/privkey.pem /opt/kumomta/etc/tls/$DOMAIN/ca.key
-  sudo cp -f /etc/letsencrypt/live/fall.kumomta.com/fullchain.pem /opt/kumomta/etc/tls/$DOMAIN/ca.csr
+  sudo cp -f /etc/letsencrypt/live/$DOMAIN/fullchain.pem /opt/kumomta/etc/tls/$DOMAIN/ca.crt
+  sudo cp -f /etc/letsencrypt/live/$DOMAIN/privkey.pem /opt/kumomta/etc/tls/$DOMAIN/ca.key
+  sudo cp -f /etc/letsencrypt/live/$DOMAIN/fullchain.pem /opt/kumomta/etc/tls/$DOMAIN/ca.csr
 
   sudo chmod 644 /opt/kumomta/etc/tls/$DOMAIN/ca.*
   sudo chown root:root /opt/kumomta/etc/tls/$DOMAIN/ca.*
+
+sudo systemctl restart apache2
 
 echo
 echo "Certificate build complete"
