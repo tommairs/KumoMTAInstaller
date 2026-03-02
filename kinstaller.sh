@@ -110,6 +110,9 @@ fi
 sudo systemctl stop  postfix.service
 sudo systemctl disable postfix.service
 
+sudo systemctl stop  exim4.service
+sudo systemctl disable exim4.service
+
 sudo systemctl stop  qpidd.service
 sudo systemctl disable qpidd.service
 
@@ -153,4 +156,5 @@ echo
 
 # Optionally test it...
 telnet localhost 25
+
 
