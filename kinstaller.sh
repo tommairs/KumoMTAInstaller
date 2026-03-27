@@ -40,7 +40,13 @@ fi
     echo "What type of package manager, dnf or apt?"
     read INSTALLTYPE
   fi
+
+
+
  
+# Determine which installer to run
+PKGTYPE=`cat /etc/os-release |grep ^NAME`
+
 bash ./cert_builder.sh
 
 sudo hostnamectl set-hostname $MYFQDN
@@ -116,8 +122,6 @@ sudo systemctl disable exim4.service
 sudo systemctl stop  qpidd.service
 sudo systemctl disable qpidd.service
 
-# Determine which installer to run
-PKGTYPE=`cat /etc/os-release |grep ^NAME`
 
 if [ "$PKGTYPE" == "Rocky Linux" ]; then
         echo "Running DNF installer"

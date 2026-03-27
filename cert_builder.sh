@@ -59,11 +59,27 @@ fi
 
 sudo systemctl stop apache2
 
-# Getting cert with LetsEncrypt
-sudo apt-get remove certbot
-sudo snap install --classic certbot
-sudo ln -s /snap/bin/certbot /usr/bin/certbot
-sudo certbot certonly --standalone -n --agree-tos -m $EMAIL -d $MYFQDN
+if [ "$PKGTYPE" == "Rocky Linux" ]; then
+        echo "Running DNF cert builder"
+        # Getting cert with LetsEncrypt
+        sudo dnf -y install epel-release
+        sudo dnf -y upgrade
+        sudo dnf -y install snapd
+        sudo systemctl enable --now snapd.socket
+        sudo ln -s /var/lib/snapd/snap /snap
+        sudo dnf -y remove certbot
+        sudo snap install --classic certbot
+        sudo ln -s /snap/bin/certbot /usr/local/bin/certbot
+        sudo certbot certonly --standalone -n --agree-tos -m $EMAIL -d $MYFQDN
+
+
+elif [ "$PKGTYPE" == "Ubuntu" ]; then
+        echo "Running APT cert builder"
+        # Getting cert with LetsEncrypt
+        sudo apt-get remove certbot
+        sudo snap install --classic certbot
+        sudo ln -s /snap/bin/certbot /usr/bin/certbot
+        sudo certbot certonly --standalone -n --agree-tos -m $EMAIL -d $MYFQDN
 
 # Copy the files to the correct locations
 # Note this is /etc/ssl/ for Ubuntu/Debian
