@@ -1,11 +1,11 @@
 # MANIFEST.TXT
 # Populate this to enable automated install
 
-export FNAME="KumoMTA ACTest"
-export MYFQDN="ac.kumomta.com"
-export DOMAIN="ac.kumomta.com"
+export FNAME="KumoMTA MRTest"
+export MYFQDN="mr.kumomta.com"
+export DOMAIN="mr.kumomta.com"
 export SELECTOR="s1024"
-export SHORTNAME="actest"
+export SHORTNAME="mrtest"
 export RH_USER_NAME="" 
 export RH_PASSWORD=""
 export OWNERNAME="Tom Mairs"
@@ -17,8 +17,8 @@ export CERT_ST="AB"
 export CERT_LO="Calgary"
 export CERT_ORG="KumoMTA"
 export POLICYTYPE="init"
-export INSTALLTYPE="dnf"
-export SSLDIR="Rocky"
+export INSTALLTYPE="apt"
+export SSLDIR="Ubuntu"
 
 # Below is a potential sample and options:
 # export FNAME="KumoMTA Dev7 (Rocky 9)"
